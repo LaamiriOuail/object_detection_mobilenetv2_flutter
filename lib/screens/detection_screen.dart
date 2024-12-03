@@ -26,7 +26,7 @@ class _DetectionScreenState extends State<DetectionScreen> {
   List<String>? labels;
   bool isLoading = false;
   // Add an instance of DatabaseHelper
-  final DatabaseHelper databaseHelper = DatabaseHelper();
+  final dbHelper = DatabaseHelper.instance;
   @override
   void initState() {
     super.initState();
@@ -106,7 +106,6 @@ class _DetectionScreenState extends State<DetectionScreen> {
 
       // Get predictions
       List<double> predictions = output[0];
-
       int maxIndex = predictions.indexOf(predictions.reduce((a, b) => a > b ? a : b));
 
       setState(() {
@@ -115,6 +114,19 @@ class _DetectionScreenState extends State<DetectionScreen> {
         isLoading = false;
       });
 
+      // Save the data in the database
+      String date = DateTime.now().toIso8601String().split('T')[0];  // Current date
+      String time = DateTime.now().toIso8601String().split('T')[1];  // Current time
+
+      // Insert image data and prediction results into the database
+      await dbHelper.insertImageData(
+        date: date,
+        time: time,
+        image: inputImage,  // You may want to store the image as bytes
+        label: predictionLabel!,
+        confidence: predictionConfidence!,
+      );
+      print('Data saved to database!');
     } catch (e) {
       print('Error classifying image: $e');
       setState(() {
@@ -122,6 +134,7 @@ class _DetectionScreenState extends State<DetectionScreen> {
       });
     }
   }
+
 
   List<List<List<List<double>>>> preprocessImage(Uint8List inputImage) {
     img.Image? image = img.decodeImage(inputImage);

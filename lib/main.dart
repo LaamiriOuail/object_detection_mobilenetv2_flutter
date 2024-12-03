@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/detection_screen.dart';
 import 'screens/history_screen.dart';
-import 'screens/detect_upload_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,8 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => AppScaffold(screen: HomeScreen()),
         '/detection': (context) => AppScaffold(screen: DetectionScreen()),
-        '/history': (context) => AppScaffold(screen: HistoryScreen()),
-        '/detect_upload': (context) => AppScaffold(screen: DetectUploadScreen()),
+        '/history': (context) => AppScaffold(screen: HistoryScreen())
       },
     );
   }
@@ -68,7 +66,7 @@ class AppScaffold extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text('Detection'),
+              title: const Text('Object Detection'),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/detection');
               },
@@ -80,13 +78,7 @@ class AppScaffold extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/history');
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.upload),
-              title: const Text('Upload Detection'),
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/detect_upload');
-              },
-            ),
+            
           ],
         ),
       ),
