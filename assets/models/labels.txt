@@ -1,0 +1,5 @@
+book
+cartable
+chair
+laptop
+table
