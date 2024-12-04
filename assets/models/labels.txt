@@ -1,5 +1,5 @@
-book
-cartable
-chair
-laptop
-table
+Book
+Person
+Chair
+Laptop
+Table
